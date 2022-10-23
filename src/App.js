@@ -1,10 +1,11 @@
 import Register from "./Pages/Register";
 import Home from "./Pages/Home";
 import "./style.scss";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { useState } from "react";
 import Login from "./Pages/Login";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
 // import ReactSwitch from "react-switch";
 
 export const ThemeContext = createContext(null);
@@ -15,6 +16,16 @@ function App() {
   const toggleTheme = () => {
     setTheme((curr) => (curr === "light" ? "dark" : "light"));
   };
+
+  const { currentUser } = useContext(AuthContext);
+
+  const MyRoutes = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+    return children;
+  };
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="App" id={theme}>
@@ -23,7 +34,11 @@ function App() {
             <Route path="/">
               <Route
                 index
-                element={<Home toggleTheme={toggleTheme} theme={theme} />}
+                element={
+                  <MyRoutes>
+                    <Home toggleTheme={toggleTheme} theme={theme} />
+                  </MyRoutes>
+                }
               />
               <Route
                 path="login"

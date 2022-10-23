@@ -6,7 +6,7 @@ import ReactSwitch from "react-switch";
 import Add from "../img/addAvatar.png";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { Formik, ErrorMessage, Form, Field } from "formik";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -116,7 +116,9 @@ const Register = (props) => {
           <button type="submit">Sign Up</button>
           {err && <span>Something went wrong</span>}
         </form>
-        <p>Already have an account? Login</p>
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
       <div className="switch">
         <ReactSwitch

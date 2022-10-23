@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactSwitch from "react-switch";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate, Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email("Enter a valid email").required(),
@@ -10,6 +13,9 @@ const loginSchema = yup.object().shape({
 });
 
 const Login = (props) => {
+  const [err, setErr] = useState(false);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -18,8 +24,18 @@ const Login = (props) => {
     resolver: yupResolver(loginSchema),
   });
 
-  const submitForm = (data) => {
-    console.log(data);
+  const submitForm = async (data) => {
+    // e.preventDefault();
+
+    const email = data.email;
+    const password = data.password;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/login");
+    } catch (err) {
+      setErr(true);
+    }
   };
 
   return (
@@ -40,8 +56,11 @@ const Login = (props) => {
           <p className="formErrors">{errors.password?.message}</p>
 
           <button type="submit">Sign in</button>
+          {err && <span>Something went wrong</span>}
         </form>
-        <p>Don't have an account? Register</p>
+        <p>
+          Don't have an account? <Link to="/register">Register</Link>{" "}
+        </p>
       </div>
       <div className="switch">
         <ReactSwitch
