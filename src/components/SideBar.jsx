@@ -6,7 +6,7 @@ import Search from "./Search";
 const SideBar = (props) => {
   return (
     <div className="sideBar">
-      <Navbar toggleTheme={props.toggleTheme} theme={props.theme === "dark"} />
+      <Navbar toggleTheme={props.toggleTheme} theme={props.theme} />
       <Search />
       <Chats />
     </div>

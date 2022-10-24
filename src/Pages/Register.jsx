@@ -73,6 +73,7 @@ const Register = (props) => {
       );
     } catch (err) {
       setErr(true);
+      console.log(err);
     }
   };
 
