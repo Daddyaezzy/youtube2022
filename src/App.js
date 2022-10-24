@@ -7,6 +7,7 @@ import Login from "./Pages/Login";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 // import ReactSwitch from "react-switch";
+// import Search from "./components/Search";
 
 export const ThemeContext = createContext(null);
 
