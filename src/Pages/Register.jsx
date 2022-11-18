@@ -47,7 +47,7 @@ const Register = (props) => {
 
       const storageRef = ref(storage, displayName);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = uploadBytesResumable(storageRef, file[0]);
 
       uploadTask.on(
         (error) => {
@@ -73,7 +73,7 @@ const Register = (props) => {
       );
     } catch (err) {
       setErr(true);
-      console.log(err);
+      console.log(err.response.data);
     }
   };
 
